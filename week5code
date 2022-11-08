@@ -1,0 +1,121 @@
+class televisionSeries{
+    constructor(name, year){
+        this.name = name;
+        this.year = year;
+    }
+
+    describe () {
+        return '${this.name} aired ${this.year}.'; 
+    }
+}
+
+class cast {
+    constructor(name) {
+        this.name = name;
+        this.actors = [];
+    
+    }
+
+    addActor(actor) {
+        if (actor instanceof Actor) {
+            this.actors.push(actor);
+        } else {
+            throw new Error('You can only add an instance of Actor, Argument is not an actor: ${actor}');
+        }
+    }
+
+    describe() {
+        return '${this.name} has ${this.actors.length} actors.';
+    }
+}
+
+class Menu {
+    constructor () {
+        this.casts = []
+        this.selectedCast = null;
+    }
+
+    start() {
+        let selection = this.showMainMenuOptions();
+
+        while (selection != 0) {
+            switch (selection) {
+                case '1':
+                    this.createCast();
+                    break;
+                case '2':
+                    this.viewCast();
+                    break;
+                case '3':
+                    this.deleteCast();
+                    break;
+                case '4':
+                    this.displayCasts();
+                    break;
+                default:
+                    selection = 0;      
+                
+            }
+            selection = showMainMenuOptions();
+        }
+        alert('Goodbye!');
+    }
+
+    showMainMenuOptions() {
+        return prompt(`
+        0) exit
+        1) create new cast
+        2) view cast
+        3) delete cast
+        4) display all casts
+        `);
+    }
+
+    showCastMenuOptions (castInfo) {
+        return prompt(`
+         0) back
+         1) create actor
+         2) delete actor
+         --------------------
+          ${castInfo}
+        `);
+    }
+     displayCasts() {
+        let castString = '';
+        for (let i = 0; i < this.casts.length; i++) {
+            castString += i + ') ' + this.casts[i].name + '\n';
+        }
+        alert(castString);
+     }
+     
+     createCast() {
+        let name = prompt('Enter name for new cast');
+        this.cast.push(new Cast(name));
+     }
+
+     viewCast() {
+        let index = prompt ('Enter index of cast you wish to view');
+        if (index > -1 && index < this.teams.length) {
+            this.selectedCast = this.Casts[index];
+            let description = "Cast name: " + this.selectedCast.name + '\n';
+
+            for (let i = 0; i < this.selectedCast.actor.length; i++) {
+                description += i + ') ' + this.selectedCast.actors[i].name + ' - ' 
+                + this.selectedCast.actors[i].character + '\n';
+            }
+
+            let selection = this.showCastMenuOptions(description);
+            switch (selection) {
+                case '1':
+                    this.createActor();
+                    break;
+                case '2':
+                    this.deleteActor();
+
+            }
+        }
+     }
+}
+
+let menu = new Menu();
+menu.start();
